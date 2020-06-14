@@ -1,8 +1,11 @@
 package com.example.todo;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import com.example.todo.Intro.IntroActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,13 +14,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       /*
-        - Создать пустой проект и запушить на гитхаб (ссылку мне в личку)
-        - Добавить IntroActivity и прописать как стартовую
-        - Добавить ViewPager в IntroActivity с тремя фрагментами
-        - В IntroActivity две кнопки next и skip при клике на next перелистывать страницу ViewPager-a,
-          на последнем экране ViewPager-a кнопку skip прятать и заменять текст кнопки next на start,
-          кнопка start запускает MainActivity (при свайпе на предыдущие страницы состояние кнопок восстанавливать)
-        - В IntroActivity кнопка skip для старта MainActivity*/
+        Preference();
+    }
+
+    private void Preference() {
+        SharedPreferences preferences = getSharedPreferences("setting", MODE_PRIVATE);
+        boolean isShown = preferences.getBoolean("isShown", false);
+        if (!isShown) {
+            startActivity(new Intent(this, IntroActivity.class));
+            finish();
+            return;
+        }
+
+    }
+
+    public void IntroStart(View view) {
+        startActivity(new Intent(this,IntroActivity.class ));
     }
 }
