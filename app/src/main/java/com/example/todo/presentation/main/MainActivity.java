@@ -1,11 +1,15 @@
-package com.example.todo;
+package com.example.todo.presentation.main;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import com.example.todo.Intro.IntroActivity;
+
+import com.example.todo.data.PreferenceHelper;
+import com.example.todo.presentation.intro.IntroActivity;
+import com.example.todo.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,21 +18,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Preference();
-    }
+        boolean isShown=PreferenceHelper.getInstance(this).isShown();
 
-    private void Preference() {
-        SharedPreferences preferences = getSharedPreferences("setting", MODE_PRIVATE);
-        boolean isShown = preferences.getBoolean("isShown", false);
-        if (!isShown) {
-            startActivity(new Intent(this, IntroActivity.class));
+
+        if (!isShown){startActivity(new Intent(this, IntroActivity.class));
             finish();
             return;
         }
 
     }
 
+
+
     public void IntroStart(View view) {
-        startActivity(new Intent(this,IntroActivity.class ));
+        startActivity(new Intent(this, IntroActivity.class));
     }
 }

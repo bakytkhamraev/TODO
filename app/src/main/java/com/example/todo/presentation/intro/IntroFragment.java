@@ -1,4 +1,4 @@
-package com.example.todo.Intro;
+package com.example.todo.presentation.intro;
 
 
 import android.os.Bundle;

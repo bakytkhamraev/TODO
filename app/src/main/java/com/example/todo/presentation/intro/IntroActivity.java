@@ -1,17 +1,19 @@
-package com.example.todo.Intro;
+package com.example.todo.presentation.intro;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import com.example.todo.MainActivity;
+
+import com.example.todo.data.PreferenceHelper;
+import com.example.todo.presentation.main.MainActivity;
 import com.example.todo.R;
 import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator;
 
@@ -41,12 +43,18 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 viewPager.setCurrentItem(getItem(+1), true);
+
+
             }
         });
 
         SkipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                PreferenceHelper.getInstance(IntroActivity.this).setIsShow();
+
+
                 startActivity(new Intent(IntroActivity.this, MainActivity.class));
                 finish();
 
@@ -65,6 +73,7 @@ public class IntroActivity extends AppCompatActivity {
                 if (pos < 2) {
                     SkipButton.setVisibility(View.VISIBLE);
                     NextButton.setVisibility(View.VISIBLE);
+
                 } else {
                     SkipButton.setVisibility(View.INVISIBLE);
                     NextButton.setVisibility(View.VISIBLE);
@@ -72,8 +81,6 @@ public class IntroActivity extends AppCompatActivity {
                     NextButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            SharedPreferences preferences = getSharedPreferences("setting", MODE_PRIVATE);
-                            preferences.edit().putBoolean("isShown", true).apply();
                             skipClick(v);
                         }
                     });
@@ -90,6 +97,9 @@ public class IntroActivity extends AppCompatActivity {
 
 
     private void skipClick(View view) {
+
+        PreferenceHelper.getInstance(IntroActivity.this).setIsShow();
+
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }
